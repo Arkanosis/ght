@@ -1,0 +1,50 @@
+#! /bin/sh
+
+SELF="$USER"
+VERSION='v0.1.0'
+
+usage() {
+    cat <<EOF
+Usage: ght mine
+       ght others
+       ght -h | --help
+       ght --version
+
+Commands:
+    mine        Show one's activity
+    others      Show activity of others
+
+Options:
+    -h, --help  Show this screen.
+    --version   Show version.
+EOF
+}
+
+if [ -f "$HOME/.ghtrc" ]; then
+    . "$HOME/.ghtrc"
+fi
+
+if [ $# -lt 1 ]; then
+     if [ x$DEFAULT != 'x' ];  then
+	 COMMAND="$DEFAULT"
+     else
+	 COMMAND="--help"
+     fi
+else
+    COMMAND="$1"
+fi
+
+if [ "x$COMMAND" = 'xmine' ];  then
+    curl -s "https://api.github.com/users/$SELF/events" |
+	jq -r '.[] | [.created_at, .type, .repo.name] | @tsv'
+elif [ "x$COMMAND" = 'x-h' ] || [ "x$COMMAND" = 'x--help' ]; then
+    usage
+elif [ "x$COMMAND" = 'x--version' ]; then
+    echo "ght $VERSION"
+elif [ "x$COMMAND" = 'xothers' ]; then
+    curl -s "https://api.github.com/users/$SELF/received_events" |
+	jq -r '.[] | [.created_at, .actor.login, .type, .repo.name] | @tsv'
+else
+    usage
+    exit 1
+fi
