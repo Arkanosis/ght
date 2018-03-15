@@ -1,4 +1,4 @@
-# ght [![Version](https://img.shields.io/badge/version-v0.1.0-orange.svg)](https://semver.org/spec/v2.0.0.html) [![License](http://img.shields.io/badge/license-ISC-blue.svg)](/LICENSE)
+# ght [![Version](https://img.shields.io/badge/version-v0.2.0--dev-orange.svg)](https://semver.org/spec/v2.0.0.html) [![License](http://img.shields.io/badge/license-ISC-blue.svg)](/LICENSE)
 
 **ght** is a command-line re-implementation of GitHub's timelines.
 
