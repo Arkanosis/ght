@@ -26,9 +26,9 @@ fi
 
 if [ $# -lt 1 ]; then
      if [ x$DEFAULT != 'x' ];  then
-	 COMMAND="$DEFAULT"
+         COMMAND="$DEFAULT"
      else
-	 COMMAND="--help"
+         COMMAND="--help"
      fi
 else
     COMMAND="$1"
@@ -36,14 +36,14 @@ fi
 
 if [ "x$COMMAND" = 'xmine' ];  then
     curl -s "https://api.github.com/users/$SELF/events" |
-	jq -r '.[] | [.created_at, .type, .repo.name] | @tsv'
+        jq -r '.[] | [.created_at, .type, .repo.name] | @tsv'
 elif [ "x$COMMAND" = 'x-h' ] || [ "x$COMMAND" = 'x--help' ]; then
     usage
 elif [ "x$COMMAND" = 'x--version' ]; then
     echo "ght $VERSION"
 elif [ "x$COMMAND" = 'xothers' ]; then
     curl -s "https://api.github.com/users/$SELF/received_events" |
-	jq -r '.[] | [.created_at, .actor.login, .type, .repo.name] | @tsv'
+        jq -r '.[] | [.created_at, .actor.login, .type, .repo.name] | @tsv'
 else
     usage >&2
     exit 1
